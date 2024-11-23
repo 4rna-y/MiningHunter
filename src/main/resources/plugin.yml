@@ -1,0 +1,9 @@
+name: MiningHunter
+version: '1.0'
+main: net.arna.miningHunter.MiningHunter
+api-version: '1.21'
+
+commands:
+  mh:
+    usage: "/mh"
+    description: "MiningHunter Commands"

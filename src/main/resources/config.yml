@@ -1,0 +1,78 @@
+#
+# time : Int
+# Change the game time limit. Set in minutes.
+#
+time: "10"
+
+#
+# score : Int
+# Goal score
+#
+score: "10"
+
+#
+# ore_coal : Int
+# Change the point of coal ore
+#
+ore_coal: "1"
+
+#
+# ore_copper : Int
+# Change the point of copper ore
+#
+ore_copper: "2"
+
+#
+# ore_iron : Int
+# Change the point of iron ore
+#
+ore_iron: "3"
+
+#
+# ore_gold : Int
+# Change the point of gold ore
+#
+ore_gold: "4"
+
+#
+# ore_lapis : Int
+# Change the point of lapis ore
+#
+ore_lapis: "5"
+
+#
+# ore_redstone : Int
+# Change the point of redstone ore
+#
+ore_redstone: "6"
+
+#
+# ore_diamond : Int
+# Change the point of diamond ore
+#
+ore_diamond: "7"
+
+#
+# ore_emerald : Int
+# Change the point of emerald ore
+#
+ore_emerald: "8"
+
+#
+# nop_chance : double
+# Change rate of non operation
+#
+nop_chance: "0.4"
+
+#
+# explode_power : float
+# Power of explosion
+#
+explode_power: "2.0"
+
+#
+# explosion_drop : bool
+# Switch between dropping items upon explosion
+#
+explosion_drop : "false"
+
