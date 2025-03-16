@@ -28,7 +28,7 @@ object EntityPickupItemEventListener : Listener
             val meta = e.item.getMetadata("ore_drop").firstOrNull()
             if (meta != null && meta.asBoolean())
             {
-                game.scoreManager.increment(score)
+                game.scoreManager.increment(p.uniqueId,score * e.item.itemStack.amount)
                 game.scoreManager.setIndicatingData(
                     p.uniqueId, IndicatingScoreData(score * e.item.itemStack.amount, 0))
             }

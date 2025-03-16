@@ -42,7 +42,7 @@ object InGameTimeTickHandler : Runnable
         game.playerManager.getPlayers().forEach {
             val indScore = game.scoreManager.getIndicatingScore(it.uniqueId)
             val baseText = Component.text(
-                "スコア: ${game.scoreManager.getScore()} / ${game.config.goalScore}")
+                "スコア: ${game.scoreManager.getScore(it.uniqueId)} / ${game.config.goalScore}")
             var t = baseText
             if (indScore != -1)
             {
@@ -56,8 +56,14 @@ object InGameTimeTickHandler : Runnable
             it.sendActionBar(t)
         }
 
-        if (game.scoreManager.getScore() >= game.config.goalScore)
+        frame++
+
+        val rp = game.scoreManager.checkScores(game.config.goalScore)
+
+        if (rp != null)
         {
+            val sps = game.scoreManager.getRankSorted()
+            val sp = game.playerManager.getPlayers(sps);
             frame = 0
             game.playerManager.getPlayers().forEach {
                 bossBar.removePlayer(it)
@@ -66,6 +72,10 @@ object InGameTimeTickHandler : Runnable
                     Component.text("目標に到達した！")
                         .color(TextColor.color(255, 255, 0)))
                 it.sendTitlePart(
+                    TitlePart.SUBTITLE,
+                    Component.text(sp.keys.first().name + "が1位だった")
+                )
+                it.sendTitlePart(
                     TitlePart.TIMES,
                     Title.Times.times(
                         Duration.ZERO,
@@ -73,6 +83,8 @@ object InGameTimeTickHandler : Runnable
                         Duration.ofMillis(250)
                     ))
                 it.playSound(it, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
+
+                it.scoreboard = game.scoreManager.getScoreBoard(sp)
             }
             game.timeManager.unregisterTickHandler(game.timeManager.inGameTimerTickScheduleId)
             game.started = false
@@ -122,12 +134,13 @@ object InGameTimeTickHandler : Runnable
                     ))
                 it.playSound(it, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
             }
+            bossBar.removeAll()
             game.timeManager.unregisterTickHandler(game.timeManager.inGameTimerTickScheduleId)
             game.started = false
             game.scoreManager.dispose()
             game.playerManager.dispose()
         }
 
-        frame++
+
     }
 }

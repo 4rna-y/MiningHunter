@@ -15,4 +15,5 @@ class InGameConfig(cfg: ConfigManager)
     val nonOperationChance = cfg.getValue("nop_chance").toDouble()
     val explosionPower = cfg.getValue("explode_power").toFloat()
     val explosionDrop = cfg.getValue("explosion_drop").toBoolean()
+    val teleportDistance = cfg.getValue("teleport_distance").toInt()
 }

@@ -76,3 +76,9 @@ explode_power: "2.0"
 #
 explosion_drop : "false"
 
+#
+# teleport_distance : int
+# Change distance of teleporting
+#
+teleport_distance: "10"
+

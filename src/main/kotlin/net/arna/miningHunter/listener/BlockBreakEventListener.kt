@@ -4,9 +4,12 @@ import net.arna.miningHunter.MiningHunter
 import net.arna.miningHunter.data.HardBlockData
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.entity.ArmorStand
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.EntityExplodeEvent
+import org.bukkit.event.entity.ExplosionPrimeEvent
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.util.Vector
 import kotlin.random.Random
@@ -47,11 +50,22 @@ object BlockBreakEventListener : Listener
         }
     }
 
+    @EventHandler
+    fun onExplode(e: EntityExplodeEvent)
+    {
+        if (!game.started) return
+        e.blockList().removeIf {
+            val s = isScored(it.type)
+            if (s) it.type = Material.AIR
+            s
+        }
+    }
+
     private fun explode(e: BlockBreakEvent)
     {
         e.isCancelled = !game.config.explosionDrop
-        e.isDropItems = game.config.explosionDrop
-        e.block.world.createExplosion(e.block.location, game.config.explosionPower)
+        e.isDropItems = false
+        e.block.world.createExplosion(e.block.location, game.config.explosionPower, false, false)
         if (game.config.explosionDrop)
         {
             dropWithMetaData(e)
@@ -70,12 +84,13 @@ object BlockBreakEventListener : Listener
         val drops = block.drops
 
         e.isDropItems = false
+        val dist = game.config.teleportDistance.toDouble()
 
         drops.forEach { itemStack ->
             val world = block.world
-            val randomOffsetX = Random.nextDouble(-2.0, 2.0)
-            val randomOffsetY = Random.nextDouble(0.0, 2.0)
-            val randomOffsetZ = Random.nextDouble(-2.0, 2.0)
+            val randomOffsetX = Random.nextDouble(-dist, dist)
+            val randomOffsetY = Random.nextDouble(0.0, dist)
+            val randomOffsetZ = Random.nextDouble(-dist, dist)
 
             val dropLocation = block.location.add(Vector(randomOffsetX, randomOffsetY, randomOffsetZ))
 

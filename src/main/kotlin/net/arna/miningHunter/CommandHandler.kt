@@ -21,11 +21,10 @@ object CommandHandler : TabExecutor
         "score",
         "explode_power",
         "explosion_drop",
+        "teleport_distance",
         "show")
 
-    override fun onTabComplete(
-        sender: CommandSender, command: Command, label: String, args: Array<out String>?)
-        : MutableList<String>
+    override fun onTabComplete(p0: CommandSender, p1: Command, p2: String, args: Array<out String>): MutableList<String>?
     {
         if (args == null)
             return arrayListOf()
@@ -39,7 +38,7 @@ object CommandHandler : TabExecutor
         return arrayListOf()
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean
+    override fun onCommand(sender: CommandSender, p1: Command, p2: String, args: Array<out String>): Boolean
     {
         if (args == null) return false
         if (args.isEmpty()) return false
